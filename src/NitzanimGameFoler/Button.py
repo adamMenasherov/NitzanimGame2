@@ -5,8 +5,8 @@ pygame.init()
 screen = pygame.display.set_mode((360, 640))
 pygame.display.set_caption('Gui Menu')
 clock = pygame.time.Clock()
-fontAnswers = pygame.font.Font(None, 30)
-fontQuestion = pygame.font.Font(None, 25)
+fontAnswers = pygame.font.Font(None, 20)
+fontQuestion = pygame.font.Font(None, FONT_SIZE_QUESTION)
 fontStatus = pygame.font.Font(None, FONT_SIZE_STATUS)
 
 class Button:
