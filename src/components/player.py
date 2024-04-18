@@ -18,6 +18,9 @@ class Player(pygame.sprite.Sprite):
         self.acc = vec(0, 0)
         self.player_position = vec(0, 0)
 
+    def reset_player_pos(self):
+        self.player_position = vec(0, 0)
+
     def update(self):
         self.acc = vec(0, 0)
 
@@ -58,3 +61,4 @@ class Player(pygame.sprite.Sprite):
         self.pos = vec((180, 550))
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
+

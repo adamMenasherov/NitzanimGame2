@@ -3,6 +3,10 @@ import time
 
 import pygame
 
+from src.NitzanimGameFoler.QuestionHandler import QuestionHandler_class
+from src.NitzanimGameFoler.Question import Question
+from src.NitzanimGameFoler.mainTrivia import mainTrivia
+from src.config import Config
 from src.components.game_status import GameStatus
 from src.components.hand import Hand
 from src.components.hand_side import HandSide
@@ -34,7 +38,7 @@ all_sprites.add(H2)
 
 
 def main_menu_phase():
-    scoreboard.reset_current_score()
+    # scoreboard.reset_current_score()
 
     events = pygame.event.get()
 
@@ -52,12 +56,13 @@ def main_menu_phase():
     VisualizationService.draw_main_menu(GlobalState.SCREEN, scoreboard.get_max_score(), GlobalState.PRESS_Y)
 
 
-def gameplay_phase():
+def gameplay_phase(list_questions):
+    print("IN GAME PHASE")
     events = pygame.event.get()
 
     for event in events:
         if is_close_app_event(event):
-            game_over()
+            continue_game()
             return
 
     P1.update()
@@ -73,10 +78,25 @@ def gameplay_phase():
     scoreboard.draw(GlobalState.SCREEN)
 
     if pygame.sprite.spritecollide(P1, hands, False, pygame.sprite.collide_mask):
+        print("collide")
         scoreboard.update_max_score()
         MusicService.play_slap_sound()
+        if GlobalState.QUESTION_INDEX < len(list_questions):
+            if not mainTrivia(list_questions):
+                print("Game over")
+                continue_game()
+                scoreboard.reset_current_score()
+                return
+        else:
+            game_over()
+        print("AFTER CORRECT ANSWER")
+        GlobalState.GAME_STATE = GameStatus.CORRECT_ANSWER
+        H1.reset()
+        H2.reset()
+        P1.reset_player_pos()
+        print(GlobalState.GAME_STATE)
+        print(P1.player_position)
         time.sleep(0.5)
-        game_over()
 
 
 def exit_game_phase():
@@ -84,9 +104,15 @@ def exit_game_phase():
     sys.exit()
 
 
-def game_over():
+def continue_game():
     P1.reset()
     H1.reset()
     H2.reset()
     GlobalState.GAME_STATE = GameStatus.MAIN_MENU
     time.sleep(0.5)
+
+def game_over():
+    GlobalState.QUESTION_INDEX = 0
+    scoreboard.reset_current_score()
+    GlobalState.GAME_STATE = GameStatus.GAME_END
+

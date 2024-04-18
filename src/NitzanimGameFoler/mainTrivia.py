@@ -1,46 +1,46 @@
-import pygame
+import pygame, random
 import sys
 from src.NitzanimGameFoler.QuestionHandler import QuestionHandler_class
 from src.NitzanimGameFoler.Question import Question
 from src.NitzanimGameFoler.Constants_Buttons import *
+from src.global_state import GlobalState
 from src.NitzanimGameFoler.Button import Button, Surface, screen, clock
 
-def mainTrivia():
-    list_questions = QuestionHandler_class.turn_to_list_buttons(Question.parse_csv("C:\\Users\\Owner\\PycharmProjects\\NitzanimGame2\\src\\NitzanimGameFoler\\Question_FIle.csv"))
-    current_question_index = 0
-    rightAns = 0
-    wrongAns = 0
+def mainTrivia(list_questions) -> bool:
+    if list_questions:
+        question = list_questions[GlobalState.QUESTION_INDEX]
 
-    while True:
-        textSurf = Surface(list_questions[current_question_index].question_text, TEXT_SURF_WIDTH, TEXT_SURF_HEIGHT, TEXT_SURF_POS, TEXT_SURF_COLOR, FONT_SIZE_QUESTION, WHITE)
+        while True:
+            textSurf = Surface(question.question_text, TEXT_SURF_WIDTH, TEXT_SURF_HEIGHT, TEXT_SURF_POS, TEXT_SURF_COLOR, FONT_SIZE_QUESTION, WHITE)
 
-        for event in pygame.event.get():
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    answer = question.check_answer()
+                    if answer:
+                        print("Correct answer")
+                        # list_questions.pop()
+                        # print("another question")
+                        GlobalState.QUESTION_INDEX += 1
+                        return True
+                    else:
+                        GlobalState.QUESTION_INDEX += 1
+                        return False
+                        # if question.check_click_screen():
+                        #     list_questions.pop()
+                        #     return False
 
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if list_questions[current_question_index].check_answer():
-                    print("Correct!")
-                    current_question_index += 1
-                    rightAns += 1
-                else:
-                    if list_questions[current_question_index].check_click_screen():
-                        print("Incorrect!")
-                        current_question_index += 1
-                        wrongAns += 1
+                if not list_questions:
+                    pygame.quit()
+                    sys.exit()
 
-            if current_question_index >= len(list_questions):
-                print(f"Wrong ans: {wrongAns}, right ans: {rightAns}")
-                pygame.quit()
-                sys.exit()
+            screen.fill('#DDF0FB')
+            textSurf.draw()
+            QuestionHandler_class.draw(screen, question)
+            pygame.display.flip()
+            clock.tick(60)
 
-        screen.fill('#DDF0FB')
-        textSurf.draw()
-        QuestionHandler_class.draw(screen, list_questions[current_question_index])
-        pygame.display.flip()
-        clock.tick(60)
-
-mainTrivia()
 
 

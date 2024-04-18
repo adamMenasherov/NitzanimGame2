@@ -9,6 +9,7 @@ class GlobalState:
     SCREEN = None
     SCROLL = 0
     PRESS_Y = 650
+    QUESTION_INDEX = 0
 
     @staticmethod
     def load_main_screen():
