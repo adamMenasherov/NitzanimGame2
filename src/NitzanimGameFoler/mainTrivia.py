@@ -1,12 +1,12 @@
 import pygame
 import sys
 from src.NitzanimGameFoler.QuestionHandler import QuestionHandler_class
-from Question import Question
-from Constants_Buttons import *
-from Button import *
+from src.NitzanimGameFoler.Question import Question
+from src.NitzanimGameFoler.Constants_Buttons import *
+from src.NitzanimGameFoler.Button import Button, Surface, screen, clock
 
-def mainT():
-    list_questions = QuestionHandler_class.turn_to_list_buttons(Question.parse_csv("Question_FIle.csv"))
+def mainTrivia():
+    list_questions = QuestionHandler_class.turn_to_list_buttons(Question.parse_csv("C:\\Users\\Owner\\PycharmProjects\\NitzanimGame2\\src\\NitzanimGameFoler\\Question_FIle.csv"))
     current_question_index = 0
     rightAns = 0
     wrongAns = 0
@@ -41,6 +41,6 @@ def mainT():
         pygame.display.flip()
         clock.tick(60)
 
-mainT()
+mainTrivia()
 
 

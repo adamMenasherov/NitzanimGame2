@@ -1,6 +1,6 @@
-from Constants_Buttons import *
-from Question import Question
-from Button import *
+from src.NitzanimGameFoler.Button import Button
+from src.NitzanimGameFoler.Constants_Buttons import *
+
 
 class QuestionHandler_class:
     def __init__(self, question):

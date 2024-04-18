@@ -1,5 +1,5 @@
 import pygame
-from Constants_Buttons import *
+from src.NitzanimGameFoler.Constants_Buttons import *
 
 pygame.init()
 screen = pygame.display.set_mode((360, 640))
