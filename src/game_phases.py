@@ -57,7 +57,6 @@ def main_menu_phase():
 
 
 def gameplay_phase(list_questions):
-    print("IN GAME PHASE")
     events = pygame.event.get()
 
     for event in events:
@@ -78,24 +77,19 @@ def gameplay_phase(list_questions):
     scoreboard.draw(GlobalState.SCREEN)
 
     if pygame.sprite.spritecollide(P1, hands, False, pygame.sprite.collide_mask):
-        print("collide")
         scoreboard.update_max_score()
         MusicService.play_slap_sound()
         if GlobalState.QUESTION_INDEX < len(list_questions):
             if not mainTrivia(list_questions):
-                print("Game over")
                 continue_game()
                 scoreboard.reset_current_score()
                 return
         else:
             game_over()
-        print("AFTER CORRECT ANSWER")
         GlobalState.GAME_STATE = GameStatus.CORRECT_ANSWER
         H1.reset()
         H2.reset()
         P1.reset_player_pos()
-        print(GlobalState.GAME_STATE)
-        print(P1.player_position)
         time.sleep(0.5)
 
 

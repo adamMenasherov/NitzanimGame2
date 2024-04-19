@@ -1,10 +1,9 @@
-import pygame, random
+import pygame
 import sys
 from src.NitzanimGameFoler.QuestionHandler import QuestionHandler_class
-from src.NitzanimGameFoler.Question import Question
 from src.NitzanimGameFoler.Constants_Buttons import *
 from src.global_state import GlobalState
-from src.NitzanimGameFoler.Button import Button, Surface, screen, clock
+from src.NitzanimGameFoler.Button import Surface, screen, clock
 
 def mainTrivia(list_questions) -> bool:
     if list_questions:
@@ -20,17 +19,12 @@ def mainTrivia(list_questions) -> bool:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     answer = question.check_answer()
                     if answer:
-                        print("Correct answer")
-                        # list_questions.pop()
-                        # print("another question")
                         GlobalState.QUESTION_INDEX += 1
                         return True
                     else:
-                        GlobalState.QUESTION_INDEX += 1
-                        return False
-                        # if question.check_click_screen():
-                        #     list_questions.pop()
-                        #     return False
+                        if question.check_click_screen():
+                            GlobalState.QUESTION_INDEX += 1
+                            return False
 
                 if not list_questions:
                     pygame.quit()

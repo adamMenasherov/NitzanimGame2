@@ -10,7 +10,6 @@ from src.services.music_service import MusicService
 
 
 pygame.init()
-
 FramePerSec = pygame.time.Clock()
 
 
@@ -20,10 +19,9 @@ def update_game_display():
 
 
 def main():
-    list_questions = QuestionHandler_class.turn_to_list_buttons(Question.parse_csv("C:\\Users\\Owner\\PycharmProjects\\NitzanimGame2\\src\\NitzanimGameFoler\\Question_FIle.csv"))
+    list_questions = QuestionHandler_class.turn_to_list_buttons(Question.parse_csv("C:\\Users\\User\\PycharmProjects\\NitzanimGame4\\src\\NitzanimGameFoler\\Question_FIle.csv"))
 
     while True:
-        print(GlobalState.QUESTION_INDEX, " val")
         MusicService.start_background_music()
         if GlobalState.GAME_STATE == GameStatus.MAIN_MENU:
             main_menu_phase()
